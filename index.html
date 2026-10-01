@@ -450,8 +450,31 @@
   }
 
   function validCoords(p) {
-    const lat = Number(p.lat), lng = Number(p.lng);
-    return Number.isFinite(lat) && Number.isFinite(lng) && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180;
+      if (!p) return false;
+  
+      // 空白座標不能當作 0
+      if (
+          p.lat === '' ||
+          p.lat === null ||
+          p.lat === undefined ||
+          p.lng === '' ||
+          p.lng === null ||
+          p.lng === undefined
+      ) {
+          return false;
+      }
+  
+      const lat = Number(p.lat);
+      const lng = Number(p.lng);
+  
+      return (
+          Number.isFinite(lat) &&
+          Number.isFinite(lng) &&
+          lat >= -90 &&
+          lat <= 90 &&
+          lng >= -180 &&
+          lng <= 180
+      );
   }
 
   function refreshMarkers(places) {
