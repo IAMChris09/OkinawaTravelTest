@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🌺 沖繩 AI 旅遊規劃站</title>
+  <title>🌺 ㄚ北專屬沖繩旅遊規劃站</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <style>
@@ -264,6 +264,7 @@
         <div class="row" style="margin-top:8px">
           <button class="btn purple" id="aiBtn" onclick="askAI()">✨ AI 規劃</button>
           <button class="btn light" onclick="applyAIPlan()" id="applyAiBtn" disabled>套用行程</button>
+          <button class="btn purple" onclick="reviewPlacesWithAI()"> 🔍 AI 景點健檢</button>
         </div>
         <div class="hint" style="margin-top:6px">AI 只會使用目前收藏的景點，不會自行新增陌生景點；回傳的每日行程可一鍵套用。</div>
         <div id="aiOutput" class="ai-output"></div>
@@ -1090,6 +1091,23 @@
     el.textContent = text;
   }
   function closeModal() { document.getElementById('modalBackdrop').classList.remove('show'); }
+
+  async function reviewPlacesWithAI() {
+  
+    const result =
+      await apiPost(
+        'reviewPlacesAI',
+        {
+          places: state.places,
+          trip: state.trip
+        }
+      );
+  
+    state.aiReview =
+      result.review;
+  
+    renderAIReview();
+  }
 </script>
 </body>
 </html>
